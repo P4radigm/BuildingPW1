@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Begeleiders
+  - CannonKey
+  - EmptyKey
+  - SpikeKey
+  - StockKey
+  - WallKey
   layers:
   - Default
   - TransparentFX
