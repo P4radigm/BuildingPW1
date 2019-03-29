@@ -27,16 +27,12 @@ public class GameManager : MonoBehaviour
         {
             GameObject.Find("SpawnerB").GetComponent<KeyHolderManager>().enabled = false;
 
-            GameObject.GetComponent<PlayerMovement>().enabled = true;
-            GameObject.Find("Main Camera").GetComponent<Camera>.enabled = false;
         }
 
         if (myGameState == GameState.Keyboard)
         {
             GameObject.Find("SpawnerB").GetComponent<KeyHolderManager>().enabled = true;
 
-            GameObject.Find("FPS controller").SetActive(false);
-            GameObject.Find("Main Camera").SetActive(true);
         }
     }
 }
