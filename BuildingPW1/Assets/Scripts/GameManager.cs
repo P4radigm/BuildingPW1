@@ -27,16 +27,16 @@ public class GameManager : MonoBehaviour
         {
             GameObject.Find("SpawnerB").GetComponent<KeyHolderManager>().enabled = false;
 
-            GameObject.Find("EnterBefore").GetComponent<MeshRenderer>().enabled = false;
-            GameObject.Find("EnterAfter").GetComponent<MeshRenderer>().enabled = true;
+            GameObject.GetComponent<PlayerMovement>().enabled = true;
+            GameObject.Find("Main Camera").GetComponent<Camera>.enabled = false;
         }
 
         if (myGameState == GameState.Keyboard)
         {
             GameObject.Find("SpawnerB").GetComponent<KeyHolderManager>().enabled = true;
 
-            GameObject.Find("EnterBefore").GetComponent<MeshRenderer>().enabled = true;
-            GameObject.Find("EnterAfter").GetComponent<MeshRenderer>().enabled = false;
+            GameObject.Find("FPS controller").SetActive(false);
+            GameObject.Find("Main Camera").SetActive(true);
         }
     }
 }
