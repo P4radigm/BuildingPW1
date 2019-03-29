@@ -7,9 +7,10 @@ TagManager:
   - Begeleiders
   - CannonKey
   - EmptyKey
-  - SpikeKey
   - StockKey
   - WallKey
+  - StairKey
+  - SpikeKey
   layers:
   - Default
   - TransparentFX
