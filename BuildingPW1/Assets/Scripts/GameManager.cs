@@ -6,8 +6,28 @@ public class GameManager : MonoBehaviour
 {
     enum GameState {Keyboard, FPS};
     bool capsLockOn = false;
+    bool PlayerReset = false;
+    GameObject Spawner;
+    GameObject MainCamera;
+    GameObject FPScontroller;
+    Vector3 OGPos = new Vector3(898, -92, 1130);
+    Vector3 OGRot = new Vector3(0, -90, 0);
+    Transform OGtransform;
 
     GameState myGameState = GameState.Keyboard;
+
+    void Start()
+    {
+        Spawner = GameObject.FindGameObjectWithTag("Spawner");
+        MainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        FPScontroller = GameObject.FindGameObjectWithTag("FPScontroller");
+
+        OGtransform = FPScontroller.transform;
+        
+        FPScontroller.SetActive(false);
+        MainCamera.SetActive(true);
+        
+    }
 
     void Update()
     {
@@ -25,14 +45,25 @@ public class GameManager : MonoBehaviour
 
         if (myGameState == GameState.FPS)
         {
-            GameObject.Find("SpawnerB").GetComponent<KeyHolderManager>().enabled = false;
+            Spawner.GetComponent<KeyHolderManager>().enabled = false;
+            MainCamera.SetActive(false);
+            FPScontroller.SetActive(true);
+
+            if (PlayerReset == false)
+            {
+                FPScontroller.transform.position = OGPos;
+                FPScontroller.transform.rotation = OGtransform.rotation;
+                PlayerReset = true;
+            }
 
         }
 
         if (myGameState == GameState.Keyboard)
         {
-            GameObject.Find("SpawnerB").GetComponent<KeyHolderManager>().enabled = true;
-
+            Spawner.GetComponent<KeyHolderManager>().enabled = true;
+            FPScontroller.SetActive(false);
+            MainCamera.SetActive(true);
+            PlayerReset = false;
         }
     }
 }
