@@ -4,12 +4,21 @@ using UnityEngine;
 
 public class KeyHolderManager : MonoBehaviour
 {
+    public static KeyHolderManager Instance;
+    public Row[] Rows = new Row[5];
+
     private Dictionary<KeyCode, KeyCodeHolder> keyCodeDictionary = new Dictionary<KeyCode, KeyCodeHolder>();
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         KeyCodeHolder[] keyCodeHolders = GetComponentsInChildren<KeyCodeHolder>();
-        foreach(KeyCodeHolder holder in keyCodeHolders)
+        foreach (KeyCodeHolder holder in keyCodeHolders)
         {
             if (!keyCodeDictionary.ContainsKey(holder.key))
             {
@@ -37,4 +46,18 @@ public class KeyHolderManager : MonoBehaviour
             }
         }
     }
+}
+
+[System.Serializable]
+public class Row
+{
+    public int MaxWallAmount;
+    public int MaxStairsAmount;
+    public int MaxCannonAmount;
+    public int MaxStockAmount;
+
+    public int CurrentWallAmount;
+    public int CurrentStairsAmount;
+    public int CurrentCannonAmount;
+    public int CurrentStockAmount;
 }

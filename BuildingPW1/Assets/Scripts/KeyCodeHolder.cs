@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class KeyCodeHolder : MonoBehaviour
 {
+    public int rowIndex = 0;
+
     public KeyCode key;
-    public int state = 0;
+    public int index = 0;
 
     private GameObject currentPrefab;
     private GameObject[] prefabs;
@@ -17,15 +19,90 @@ public class KeyCodeHolder : MonoBehaviour
 
     public void UpdateToNextprefab()
     {
-        state++;
-        if(state >= prefabs.Length)
+        index++;
+        while (index < prefabs.Length && !CanPlace())
         {
-            state = 0;
+            index++;
         }
+            
+        if(index >= prefabs.Length)
+        {
+            index = 0;
+        }
+
         if(currentPrefab != null)
         {
-            Destroy(currentPrefab);
+            RemoveCurrentKey();
         }
-        currentPrefab = Instantiate(prefabs[state],transform.position, Quaternion.identity);
+        PlaceNewKey();
+    }
+
+    void RemoveCurrentKey()
+    {
+        switch (currentPrefab.tag)
+        {
+            case "CannonKey":
+                KeyHolderManager.Instance.Rows[rowIndex].CurrentCannonAmount--;
+                break;
+            case "WallKey":
+                KeyHolderManager.Instance.Rows[rowIndex].CurrentWallAmount--;
+                break;
+            case "StairKey":
+                KeyHolderManager.Instance.Rows[rowIndex].CurrentStairsAmount--;
+                break;
+            case "StockKey":
+                KeyHolderManager.Instance.Rows[rowIndex].CurrentStockAmount--;
+                break;
+        }
+
+        Destroy(currentPrefab);
+    }
+
+    void PlaceNewKey()
+    {
+        switch (prefabs[index].tag)
+        {
+            case "CannonKey":
+                KeyHolderManager.Instance.Rows[rowIndex].CurrentCannonAmount++;
+                break;
+            case "WallKey":
+                KeyHolderManager.Instance.Rows[rowIndex].CurrentWallAmount++;
+                break;
+            case "StairKey":
+                KeyHolderManager.Instance.Rows[rowIndex].CurrentStairsAmount++;
+                break;
+            case "StockKey":
+                KeyHolderManager.Instance.Rows[rowIndex].CurrentStockAmount++;
+                break;
+        }
+
+        currentPrefab = Instantiate(prefabs[index], transform.position, Quaternion.identity);
+    }
+
+    bool CanPlace()
+    {
+        bool _returnValue = false;
+
+        switch (prefabs[index].tag)
+        {
+            case "CannonKey":
+                if (KeyHolderManager.Instance.Rows[rowIndex].CurrentCannonAmount < KeyHolderManager.Instance.Rows[rowIndex].MaxCannonAmount)
+                    _returnValue = true;
+                break;
+            case "WallKey":
+                if (KeyHolderManager.Instance.Rows[rowIndex].CurrentWallAmount < KeyHolderManager.Instance.Rows[rowIndex].MaxWallAmount)
+                    _returnValue = true;
+                break;
+            case "StairKey":
+                if (KeyHolderManager.Instance.Rows[rowIndex].CurrentStairsAmount < KeyHolderManager.Instance.Rows[rowIndex].MaxStairsAmount)
+                    _returnValue = true;
+                break;
+            case "StockKey":
+                if (KeyHolderManager.Instance.Rows[rowIndex].CurrentStockAmount < KeyHolderManager.Instance.Rows[rowIndex].MaxStockAmount)
+                    _returnValue = true;
+                break;
+        }
+
+        return _returnValue;
     }
 }
