@@ -8,7 +8,10 @@ public class KeyCodeHolder : MonoBehaviour
 
     public KeyCode key;
     public int index = 0;
+    public GameObject Highlight;
+    bool IsThereLight = false;
 
+    private GameObject CurrentLight;
     private GameObject currentPrefab;
     private GameObject[] prefabs;
 
@@ -17,8 +20,22 @@ public class KeyCodeHolder : MonoBehaviour
         prefabs = Resources.LoadAll<GameObject>("KeyPrefabs");
     }
 
+    public IEnumerator Light()
+    {
+        if(IsThereLight != true)
+        {
+        IsThereLight = true;
+        CurrentLight = Instantiate(Highlight, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(0.2f);
+        Destroy(CurrentLight);
+        IsThereLight = false;
+        }
+    }
+
     public void UpdateToNextprefab()
     {
+        StartCoroutine(Light());
+
         index++;
         while (index < prefabs.Length && !CanPlace())
         {
@@ -35,6 +52,7 @@ public class KeyCodeHolder : MonoBehaviour
             RemoveCurrentKey();
         }
         PlaceNewKey();
+
     }
 
     void RemoveCurrentKey()
