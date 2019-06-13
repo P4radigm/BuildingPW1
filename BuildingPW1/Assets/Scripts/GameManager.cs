@@ -5,13 +5,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     enum GameState {Keyboard, FPS};
-    bool capsLockOn = false;
     bool PlayerReset = false;
     GameObject Spawner;
     GameObject MainCamera;
     GameObject FPScontroller;
     Vector3 OGPos = new Vector3(898, -92, 1130);
-    Vector3 OGRot = new Vector3(0, -90, 0);
     Transform OGtransform;
 
     GameState myGameState = GameState.Keyboard;

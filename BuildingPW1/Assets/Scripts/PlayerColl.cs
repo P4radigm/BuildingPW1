@@ -3,16 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerColl : MonoBehaviour
+
 {
-    // Start is called before the first frame update
+    GameObject FPScontroller;
+    Vector3 OGPos = new Vector3(898, -92, 1130);
+    Transform OGtransform;
+
     void Start()
     {
-        
+        FPScontroller = GameObject.FindGameObjectWithTag("FPScontroller");
+
+        OGtransform = FPScontroller.transform;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider collision)
     {
-        
+        if (collision.gameObject.tag == "RespawnColliders")
+        {
+            FPScontroller.transform.position = OGPos;
+            FPScontroller.transform.rotation = OGtransform.rotation;
+        }
     }
+
 }
+
