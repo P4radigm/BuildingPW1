@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     GameObject Spawner;
     GameObject MainCamera;
     GameObject FPScontroller;
-    Vector3 OGPos = new Vector3(898, -92, 1130);
+    Vector3 OGPos = new Vector3(898, 288, 1130);
     Transform OGtransform;
 
     GameState myGameState = GameState.Keyboard;
@@ -33,7 +33,10 @@ public class GameManager : MonoBehaviour
         {
             if (myGameState == GameState.Keyboard)
             {
-                myGameState = GameState.FPS;
+                if (UsingAllKeys() == true)
+                {
+                    myGameState = GameState.FPS;
+                }
             }
             else
             {
@@ -63,5 +66,18 @@ public class GameManager : MonoBehaviour
             MainCamera.SetActive(true);
             PlayerReset = false;
         }
+    }
+
+    bool UsingAllKeys()
+    {
+        bool _allChecked = true;
+
+        foreach (var _row in KeyHolderManager.Instance.Rows)
+        {
+            if (_row.CurrentStairsAmount != _row.MaxStairsAmount || _row.CurrentCannonAmount != _row.MaxCannonAmount || _row.CurrentWallAmount != _row.MaxWallAmount || _row.CurrentStockAmount != _row.MaxStockAmount)
+                _allChecked = false;
+        }
+
+        return _allChecked;
     }
 }

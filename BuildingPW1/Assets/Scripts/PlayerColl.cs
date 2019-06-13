@@ -6,7 +6,7 @@ public class PlayerColl : MonoBehaviour
 
 {
     GameObject FPScontroller;
-    Vector3 OGPos = new Vector3(898, -92, 1130);
+    Vector3 OGPos = new Vector3(898, 288, 1130);
     Transform OGtransform;
 
     void Start()
