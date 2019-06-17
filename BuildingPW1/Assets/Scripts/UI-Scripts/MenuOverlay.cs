@@ -44,6 +44,7 @@ public class MenuOverlay : MonoBehaviour
     void Pause()
     {
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
